@@ -15,7 +15,7 @@ from tensorflow.keras.layers import Input
 from sklearn.preprocessing import StandardScaler
 import re
 
-data = pd.read_csv('/content/NEW_Dataset Capstone.xlsx - Rating Data (4).csv')
+data = pd.read_csv('NEW_Dataset Capstone.xlsx - Rating Data (4).csv')
 
 user_ids = data.columns[2:]
 item_ids = data['Coffee IDs'].tolist()
