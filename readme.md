@@ -1,6 +1,8 @@
 # Bangkit Capstone Project
 
-This is repository aplication of CoffeeScape
+### This is repository aplication of CoffeeScape
+
+Please change the branch to `cc`, `ml`, or `md` to see each path repository!
 
 # Our Design app
 
