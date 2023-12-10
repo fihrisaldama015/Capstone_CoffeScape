@@ -13,7 +13,10 @@
         android:theme="@style/Theme.CoffeeScape"
         tools:targetApi="31">
         <activity
-            android:name=".view.SplashActivity"
+            android:name=".ui.landingpage.WelcomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.SplashActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
