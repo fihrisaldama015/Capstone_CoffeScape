@@ -63,7 +63,7 @@ const addRating = async (request, h) => {
 const addCoffeeRating = async (request, h) => {
   try {
     const { id } = request.params;
-    const { coffeeId, rating } = request.payload;
+    const { coffeeId, rating , comment} = request.payload;
 
     if (!coffeeId) {
       const response = h.response({
@@ -120,7 +120,7 @@ const addCoffeeRating = async (request, h) => {
 
     await ratingRef.set(
       {
-        rating: FieldValue.arrayUnion({ userId: id, rating }),
+        rating: FieldValue.arrayUnion({ userId: id, rating , comment}),
       },
       { merge: true }
     );
@@ -152,6 +152,7 @@ const addCoffeeRating = async (request, h) => {
       data: {
         id: user.id,
         rating: rating,
+        comment: comment,
       },
     });
     response.code(201);
@@ -268,4 +269,5 @@ const removeRatingCoffee = async (request, h) => {
   }
 };
 
-module.exports = { addRating, addCoffeeRating, removeRatingCoffee };
+
+module.exports = { addRating, addCoffeeRating, removeRatingCoffee};
