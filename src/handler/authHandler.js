@@ -24,6 +24,14 @@ const registerUser = async (request, h) => {
       response.code(400);
       return response;
     }
+    if(!email.includes('@')) {
+      const response = h.response({
+        status: "fail",
+        message: "Please input valid email",
+      });
+      response.code(400);
+      return response;
+    }
 
     const userWithSameEmail = await db
       .collection("users")

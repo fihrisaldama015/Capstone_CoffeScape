@@ -2,7 +2,7 @@ const {
   addData,
   getArabica,
   getArabicaById,
-} = require("./handler/arabicaHandler");
+} = require("./handler/coffeeHandler");
 
 const {
   addRating,

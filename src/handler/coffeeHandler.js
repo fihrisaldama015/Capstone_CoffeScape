@@ -1,4 +1,4 @@
-const arabica = require("../arabica");
+const arabica = require("../coffee");
 const { db } = require("../lib/firebase");
 
 const getArabica = async (request, h) => {
@@ -17,6 +17,7 @@ const getArabica = async (request, h) => {
             ServingStyle: doc.data().ServingStyle,
             RecommendedBeans: doc.data().RecommendedBeans,
             BrewingMethod: doc.data().BrewingMethod,
+            moodType: doc.data().moodType, 
             rating: doc.data().rating,
           };
           arabica.push(temp);
@@ -56,6 +57,7 @@ const getArabicaById = async (request, h) => {
         ServingStyle: data.ServingStyle,
         RecommendedBeans: data.RecommendedBeans,
         BrewingMethod: data.BrewingMethod,
+        moodType: doc.data().moodType, 
         rating: data.rating,
       };
 
