@@ -1,4 +1,4 @@
-const { FieldValue } = require("../lib/firebase");
+const { db,FieldValue } = require("../lib/firebase");
 
 const addFavoriteCoffee = async (request, h) => {
   try {
@@ -135,4 +135,55 @@ const removeFavoriteCoffee = async (request, h) => {
   }
 };
 
-module.exports = { addFavoriteCoffee, removeFavoriteCoffee };
+const getFavoriteCoffee = async (request, h) => {
+  try {
+    const { id } = request.params;
+    const user = await db.collection("users").doc(id).get();
+    if (!user.exists) {
+      const response = h.response({
+        status: "fail",
+        message: "User not found",
+      });
+      response.code(404);
+      return response;
+    }
+
+    const favoriteCoffee = user.data().favoriteCoffee;
+    const favoriteCoffeeData = [];
+    for (let i = 0; i < favoriteCoffee.length; i++) {
+      const docRef = db.collection("recipes").doc(favoriteCoffee[i]);
+      const doc = await docRef.get();
+      if (doc.exists) {
+        const data = doc.data();
+        const arabicaRecipe = {
+          id: doc.id,
+          name: data.name,
+          FlavorProfiles: data.FlavorProfiles,
+          RoastLevel: data.RoastLevel,
+          ServingStyle: data.ServingStyle,
+          RecommendedBeans: data.RecommendedBeans,
+          BrewingMethod: data.BrewingMethod,
+          rating: data.rating,
+        };
+        favoriteCoffeeData.push(arabicaRecipe);
+      }
+    }
+    const response = h.response({
+      status: "success",
+      message: "get favorite coffee successfully",
+      data: favoriteCoffeeData,
+    });
+    response.code(200);
+    return response;
+  } catch (error) {
+    console.log(error);
+    const response = h.response({
+      status: "fail",
+      message: "get favorite coffee failed: " + error,
+    });
+    response.code(400);
+    return response;
+  }
+};
+
+module.exports = { addFavoriteCoffee, removeFavoriteCoffee, getFavoriteCoffee };

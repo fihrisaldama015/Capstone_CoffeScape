@@ -8,7 +8,7 @@ const addRating = async (request, h) => {
   try {
     arabica.map((rating) => {
       ratingsCollection
-        .doc(rating.name)
+        .doc(recipe.coffeeId.toString())
         .set({ name: rating.name }, { merge: true })
         .then(() => {
           console.log(`${rating.name} rating added to Firebase!`);

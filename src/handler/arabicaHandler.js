@@ -88,9 +88,9 @@ const getArabicaById = async (request, h) => {
 const addData = (request, h) => {
   const recipesCollection = db.collection("recipes");
   try {
-    arabica.map((recipe) => {
+    arabica.map((recipe,) => {
       recipesCollection
-        .doc(recipe.name)
+        .doc(recipe.coffeeId.toString())
         .set(recipe, { merge: true })
         .then(() => {
           console.log(`${recipe.name} recipe added to Firebase!`);
