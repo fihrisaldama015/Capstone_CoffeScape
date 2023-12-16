@@ -8,8 +8,8 @@ const addRating = async (request, h) => {
   try {
     arabica.map((rating) => {
       ratingsCollection
-        .doc(recipe.coffeeId.toString())
-        .set({ name: rating.name }, { merge: true })
+        .doc(rating.coffeeId.toString())
+        .set(rating, { merge: true })  
         .then(() => {
           console.log(`${rating.name} rating added to Firebase!`);
         })
@@ -37,7 +37,7 @@ const addRating = async (request, h) => {
       });
       const average = ratingSum / ratingLength;
 
-      recipesCollection.doc(rating.name).set(
+      recipesCollection.doc(rating.coffeeId.toString()).set(
         {
           rating: average,
         },
@@ -53,7 +53,7 @@ const addRating = async (request, h) => {
   } catch (error) {
     const response = h.response({
       status: "fail",
-      message: `Error adding ${rating.name} rating: ${error}`,
+      message: `Error adding  rating: ${error}`,
     });
     response.code(400);
     return response;

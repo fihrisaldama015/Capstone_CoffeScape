@@ -1,5 +1,6 @@
 const rating = [
   {
+    coffeeId: 1,
     name: "Espresso",
     rating: [
       {
@@ -616,6 +617,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 2,
     name: "Americano",
     rating: [
       { userId: "1", rating: "10" },
@@ -743,6 +745,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 3,
     name: "Latte",
     rating: [
       { userId: "1", rating: "7" },
@@ -883,6 +886,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 4,
     name: "Cappuccino",
     rating: [
       { userId: "1", rating: "8" },
@@ -1014,6 +1018,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 5,
     name: "Macchiato",
     rating: [
       { userId: "1", rating: "7" },
@@ -1143,6 +1148,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 6,
     name: "Flat White",
     rating: [
       { userId: "1", rating: "9" },
@@ -1268,6 +1274,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 7,
     name: "Mocha",
     rating: [
       { userId: "1", rating: "10" },
@@ -1396,6 +1403,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 8,
     name: "Cortado",
     rating: [
       { userId: "1", rating: "10" },
@@ -1519,6 +1527,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 9,
     name: "Drip Brewed Coffee",
     rating: [
       { userId: "1", rating: "8" },
@@ -1638,6 +1647,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 14,
     name: "Breve",
     rating: [
       { userId: "1", rating: "8" },
@@ -1765,8 +1775,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 16,
     name: "Caramel Macchiato",
-    rating: [
+        rating: [
       { userId: "1", rating: "8" },
       { userId: "2", rating: "7" },
       { userId: "3", rating: "4" },
@@ -1888,8 +1899,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 28,
     name: "Con panna",
-    rating: [
+        rating: [
       { userId: "1", rating: "10" },
       { userId: "2", rating: "3" },
       { userId: "3", rating: "5" },
@@ -2015,6 +2027,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 43,
     name: "White Mocha",
     rating: [
       { userId: "1", rating: "9" },
@@ -2133,6 +2146,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 49,
     name: "Irish Cream Flavored Coffee",
     rating: [
       { userId: "1", rating: "10" },
@@ -2249,6 +2263,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 50,
     name: "Tiramisu Latte",
     rating: [
       { userId: "1", rating: "8" },
@@ -2385,8 +2400,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 15,
     name: "Vienna",
-    rating: [
+        rating: [
       { userId: "1", rating: "5" },
       { userId: "2", rating: "1" },
       { userId: "3", rating: "2" },
@@ -2503,8 +2519,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 20,
     name: "Pour-over Coffee",
-    rating: [
+   rating: [
       { userId: "1", rating: "6" },
       { userId: "2", rating: "1" },
       { userId: "3", rating: "2" },
@@ -2623,8 +2640,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 21,
     name: "Irish Coffee",
-    rating: [
+        rating: [
       { userId: "1", rating: "4" },
       { userId: "2", rating: "2" },
       { userId: "3", rating: "2" },
@@ -2744,8 +2762,8 @@ const rating = [
     ],
   },
   {
-    name: "Turkish Coffee",
-    rating: [
+    coffeeId: 22,
+    name: "Turkish Coffee",    rating: [
       { userId: "1", rating: "4" },
       { userId: "2", rating: "3" },
       { userId: "3", rating: "3" },
@@ -2861,8 +2879,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 23,
     name: "Cold Brew",
-    rating: [
+        rating: [
       { userId: "1", rating: "4" },
       { userId: "2", rating: "2" },
       { userId: "3", rating: "2" },
@@ -2981,8 +3000,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 24,
     name: "Iced Coffee",
-    rating: [
+        rating: [
       { userId: "1", rating: "4" },
       { userId: "2", rating: "1" },
       { userId: "3", rating: "1" },
@@ -3106,8 +3126,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 25,
     name: "Affogato",
-    rating: [
+        rating: [
       { userId: "1", rating: "6" },
       { userId: "2", rating: "3" },
       { userId: "3", rating: "2" },
@@ -3234,8 +3255,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 26,
     name: "Café au Lait",
-    rating: [
+        rating: [
       { userId: "1", rating: "3" },
       { userId: "2", rating: "4" },
       { userId: "3", rating: "1" },
@@ -3350,8 +3372,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 27,
     name: "Frappuccino",
-    rating: [
+        rating: [
       { userId: "1", rating: "2" },
       { userId: "2", rating: "5" },
       { userId: "3", rating: "1" },
@@ -3480,8 +3503,9 @@ const rating = [
     ],
   },
   {
-    name: "Galao",
-    rating: [
+    coffeeId: 31,
+     name: "Galao",
+         rating: [
       { userId: "1", rating: "3" },
       { userId: "2", rating: "5" },
       { userId: "3", rating: "3" },
@@ -3610,8 +3634,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 32,
     name: "Mazagran",
-    rating: [
+        rating: [
       { userId: "1", rating: "1" },
       { userId: "2", rating: "1" },
       { userId: "3", rating: "1" },
@@ -3736,8 +3761,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 33,
     name: "Bulletproof",
-    rating: [
+        rating: [
       { userId: "1", rating: "4" },
       { userId: "2", rating: "2" },
       { userId: "3", rating: "1" },
@@ -3856,8 +3882,8 @@ const rating = [
     ],
   },
   {
-    name: "Mexican Coffee",
-    rating: [
+    coffeeId: 34,
+    name: "Mexican Coffee",    rating: [
       { userId: "1", rating: "2" },
       { userId: "2", rating: "3" },
       { userId: "3", rating: "1" },
@@ -3978,8 +4004,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 35,
     name: "Kopi Luwak",
-    rating: [
+        rating: [
       { userId: "1", rating: "3" },
       { userId: "2", rating: "4" },
       { userId: "3", rating: "2" },
@@ -4107,6 +4134,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 36,
     name: "Cuban Latte",
     rating: [
       { userId: "1", rating: "4" },
@@ -4237,6 +4265,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 37,
     name: "Cascara Latte",
     rating: [
       { userId: "1", rating: "7" },
@@ -4363,6 +4392,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 38,
     name: "Coconut Coffee",
     rating: [
       { userId: "1", rating: "8" },
@@ -4485,6 +4515,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 40,
     name: "Cardamom Coffee",
     rating: [
       { userId: "1", rating: "9" },
@@ -4613,6 +4644,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 42,
     name: "Café de Olla",
     rating: [
       { userId: "1", rating: "6" },
@@ -4740,6 +4772,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 47,
     name: "Café Bombón",
     rating: [
       { userId: "1", rating: "5" },
@@ -4855,7 +4888,8 @@ const rating = [
     ],
   },
   {
-    name: "Red Eye",
+    coffeeId: 10,
+     name: "Red Eye",
     rating: [
       { userId: "1", rating: "9" },
       { userId: "2", rating: "1" },
@@ -4986,7 +5020,8 @@ const rating = [
     ],
   },
   {
-    name: "Black Eye",
+    coffeeId: 11,
+     name: "Black Eye",
     rating: [
       { userId: "1", rating: "6" },
       { userId: "2", rating: "2" },
@@ -5115,7 +5150,8 @@ const rating = [
     ],
   },
   {
-    name: "Long Black ",
+    coffeeId: 12,
+     name: "Long Black ",
     rating: [
       { userId: "1", rating: "10" },
       { userId: "2", rating: "3" },
@@ -5230,7 +5266,8 @@ const rating = [
     ],
   },
   {
-    name: "Doppio",
+    coffeeId: 13,
+     name: "Doppio",
     rating: [
       { userId: "1", rating: "10" },
       { userId: "2", rating: "4" },
@@ -5364,8 +5401,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 29,
     name: "Ristretto",
-    rating: [
+        rating: [
       { userId: "1", rating: "9" },
       { userId: "2", rating: "5" },
       { userId: "3", rating: "10" },
@@ -5486,8 +5524,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 30,
     name: "Lungo",
-    rating: [
+        rating: [
       { userId: "1", rating: "7" },
       { userId: "2", rating: "1" },
       { userId: "3", rating: "10" },
@@ -5612,8 +5651,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 17,
     name: "Gingerbread Latte",
-    rating: [
+        rating: [
       { userId: "1", rating: "2" },
       { userId: "2", rating: "9" },
       { userId: "3", rating: "7" },
@@ -5740,8 +5780,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 18,
     name: "Peppermint Mocha",
-    rating: [
+        rating: [
       { userId: "1", rating: "1" },
       { userId: "2", rating: "9" },
       { userId: "3", rating: "6" },
@@ -5863,8 +5904,9 @@ const rating = [
     ],
   },
   {
+    coffeeId: 19,
     name: "Chai Latte",
-    rating: [
+        rating: [
       { userId: "1", rating: "3" },
       { userId: "2", rating: "10" },
       { userId: "3", rating: "8" },
@@ -5990,6 +6032,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 39,
     name: "Maple Pecan Latte",
     rating: [
       { userId: "1", rating: "4" },
@@ -6118,6 +6161,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 41,
     name: "Honey Lavender Latte",
     rating: [
       { userId: "1", rating: "2" },
@@ -6248,6 +6292,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 44,
     name: "Raspberry Mocha",
     rating: [
       { userId: "1", rating: "2" },
@@ -6378,6 +6423,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 45,
     name: "Coconut Mocca",
     rating: [
       { userId: "1", rating: "1" },
@@ -6494,6 +6540,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 46,
     name: "Honey Almond Latte",
     rating: [
       { userId: "1", rating: "1" },
@@ -6621,6 +6668,7 @@ const rating = [
     ],
   },
   {
+    coffeeId: 48,
     name: "Vanilla Soy Latte",
     rating: [
       {
