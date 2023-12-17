@@ -25,4 +25,14 @@
     <string name="hint_confirm_password">Confirm your password</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
+
+    <string name="placeholder_search">Search your coffee</string>
+    <string name="home">Home</string>
+    <string name="favorite">Favorite</string>
+    <string name="profile">Profile</string>
+    <string name="register_fail">Registration failed</string>
+    <string name="register_success">Registration success</string>
+    <string name="confirm">Please confirm your password</string>
+    <string name="confirm_not_same">Passwords do not match</string>
+    <string name="back">Back</string>
 </resources>
