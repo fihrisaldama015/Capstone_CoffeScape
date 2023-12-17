@@ -6,7 +6,8 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="0">
+        motion:duration="5"
+        motion:autoTransition="animateToEnd">
         <KeyFrameSet>
         </KeyFrameSet>
     </Transition>
@@ -29,8 +30,6 @@
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintVertical_bias="0.40"
             android:layout_marginTop="54dp"/>
         <Constraint
             android:id="@+id/menu1"
@@ -101,17 +100,14 @@
             android:layout_height="wrap_content"
             motion:layout_constraintEnd_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintVertical_bias="0.3"/>
+            />
 
         <Constraint
             android:id="@+id/landingPage2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintVertical_bias="0.4"
-            android:layout_marginTop="76dp"/>
+            motion:layout_constraintEnd_toEndOf="parent" />
 
         <Constraint
             android:id="@+id/menu1"
@@ -188,7 +184,7 @@
             android:layout_height="wrap_content"
             motion:layout_constraintEnd_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintVertical_bias="0.3"/>
+            />
 
         <Constraint
             android:id="@+id/landingPage3"
@@ -196,7 +192,7 @@
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintVertical_bias="0.4"/>
+            />
 
         <Constraint
             android:id="@+id/menu1"
@@ -273,7 +269,7 @@
             android:layout_height="wrap_content"
             motion:layout_constraintEnd_toStartOf="parent"
             motion:layout_constraintTop_toTopOf="parent"
-            motion:layout_constraintVertical_bias="0.3"/>
+            />
 
         <Constraint
             android:id="@+id/landingPage4"
@@ -281,7 +277,7 @@
             android:layout_height="wrap_content"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintVertical_bias="0.4"/>
+            />
 
         <Constraint
             android:id="@+id/menu1"

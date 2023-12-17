@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.SplashActivity">
 
-    <ImageView
-        android:id="@+id/idLogo"
-        android:contentDescription="@string/splash_screen"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:src="@drawable/splash"
-        android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/idLogo"-->
+<!--        android:contentDescription="@string/splash_screen"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:src="@drawable/splash"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
