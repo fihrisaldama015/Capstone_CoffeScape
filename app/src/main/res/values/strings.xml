@@ -35,4 +35,6 @@
     <string name="confirm">Please confirm your password</string>
     <string name="confirm_not_same">Passwords do not match</string>
     <string name="back">Back</string>
+    <string name="login_fail">Login failed</string>
+    <string name="login_success">Login success</string>
 </resources>

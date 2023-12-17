@@ -172,13 +172,14 @@
     <Button
         android:id="@+id/registerButton"
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="56dp"
         android:text="@string/register3"
         android:layout_margin="32dp"
         android:backgroundTint="@color/brown"
         app:layout_constraintTop_toBottomOf="@id/confirmPasswordEditTextLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ProgressBar
         android:id="@+id/progressBar"

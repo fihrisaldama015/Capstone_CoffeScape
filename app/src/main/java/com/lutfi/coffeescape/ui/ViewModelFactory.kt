@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.lutfi.coffeescape.data.CoffeeScapeRepository
 import com.lutfi.coffeescape.di.Injection
+import com.lutfi.coffeescape.ui.home.HomeViewModel
+import com.lutfi.coffeescape.ui.login.LoginViewModel
 import com.lutfi.coffeescape.ui.register.RegisterViewModel
 
 class ViewModelFactory private constructor(private val repository: CoffeeScapeRepository) : ViewModelProvider.NewInstanceFactory() {
@@ -14,9 +16,16 @@ class ViewModelFactory private constructor(private val repository: CoffeeScapeRe
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(repository) as T
             }
+            modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
+                LoginViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
+                HomeViewModel(repository) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
+
     companion object {
         @Volatile
         private var INSTANCE: ViewModelFactory? = null
