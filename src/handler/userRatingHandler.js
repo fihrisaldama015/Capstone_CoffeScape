@@ -137,12 +137,15 @@ const addCoffeeRating = async (request, h) => {
     const ratingArray = allRating.data().rating;
     let ratingLength = 0;
     ratingArray.forEach((rating) => {
-      if (rating.rating > 0) {
+      if (rating.rating && rating.rating > 0) {
         ratingLength++;
       }
     });
     const ratingSum = ratingArray.reduce((acc, curr) => {
-      return acc + Number(curr.rating);
+      if (curr.rating && curr.rating > 0) {
+        return acc + Number(curr.rating);
+      }
+      return acc + 0;
     }, 0);
     const average = (ratingSum + Number(rating)) / (ratingLength + 1);
 
