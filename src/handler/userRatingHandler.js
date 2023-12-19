@@ -9,7 +9,7 @@ const addRating = async (request, h) => {
     arabica.map((rating) => {
       ratingsCollection
         .doc(rating.coffeeId.toString())
-        .set(rating, { merge: true })  
+        .set(rating, { merge: true })
         .then(() => {
           console.log(`${rating.name} rating added to Firebase!`);
         })
@@ -63,12 +63,12 @@ const addRating = async (request, h) => {
 const addCoffeeRating = async (request, h) => {
   try {
     const { id } = request.params;
-    const { coffeeId, rating , comment} = request.payload;
+    const { coffeeId, rating, comment } = request.payload;
 
-    if (!coffeeId) {
+    if (!coffeeId || !rating || !comment) {
       const response = h.response({
         status: "fail",
-        message: "Please fill all field, `coffeeId`",
+        message: "Please fill all field, `coffeeId`, `rating`, `comment`",
       });
       response.code(400);
       return response;
@@ -120,7 +120,16 @@ const addCoffeeRating = async (request, h) => {
 
     await ratingRef.set(
       {
-        rating: FieldValue.arrayUnion({ userId: id, rating , comment}),
+        rating: FieldValue.arrayUnion({ userId: id, rating, comment }),
+      },
+      { merge: true }
+    );
+
+    const userRef = db.collection("users").doc(id);
+
+    await userRef.set(
+      {
+        ratingCoffee: FieldValue.arrayUnion({ coffeeId, rating, comment }),
       },
       { merge: true }
     );
@@ -224,6 +233,18 @@ const removeRatingCoffee = async (request, h) => {
       rating: FieldValue.arrayRemove(allRating.data().rating[ratingIndex]),
     });
 
+    const userRef = db.collection("users").doc(id);
+
+    const userRatingIndex = await user
+      .data()
+      .ratingCoffee.findIndex((item) => item.coffeeId === coffeeId);
+
+    await userRef.update({
+      ratingCoffee: FieldValue.arrayRemove(
+        user.data().ratingCoffee[userRatingIndex]
+      ),
+    });
+
     const allRatingAfterDelete = await ratingRef.get();
     const ratingArray = allRatingAfterDelete.data().rating;
     let ratingLength = 0;
@@ -269,5 +290,60 @@ const removeRatingCoffee = async (request, h) => {
   }
 };
 
+const getUserRating = async (request, h) => {
+  try {
+    const { id } = request.params;
+    const user = await db.collection("users").doc(id).get();
+    if (!user.exists) {
+      const response = h.response({
+        status: "fail",
+        message: "User not found",
+      });
+      response.code(404);
+      return response;
+    }
 
-module.exports = { addRating, addCoffeeRating, removeRatingCoffee};
+    if (!user.data().ratingCoffee) {
+      const response = h.response({
+        status: "success",
+        message: "get user rating successfully",
+        data: {
+          id: user.id,
+          ratingCoffee: [],
+        },
+      });
+      response.code(200);
+      return response;
+    }
+
+    const userRating = user.data().ratingCoffee;
+    const response = h.response({
+      status: "success",
+      message: "get user rating successfully",
+      data: {
+        id: user.id,
+        ratingCoffee: userRating,
+      },
+    });
+    response.code(200);
+    return response;
+  } catch (error) {
+    console.log(
+      "🚀 ~ file: userRatingHandler.js:246 ~ removeRatingCoffee ~ error:",
+      error
+    );
+    const response = h.response({
+      status: "fail",
+      message: "get user rating failed: " + error,
+    });
+    response.code(400);
+    return response;
+  }
+};
+
+module.exports = {
+  addRating,
+  addCoffeeRating,
+  removeRatingCoffee,
+  getUserRating,
+};

@@ -8,6 +8,7 @@ const {
   addRating,
   addCoffeeRating,
   removeRatingCoffee,
+  getUserRating,
 } = require("./handler/userRatingHandler");
 
 const { registerUser, loginUser } = require("./handler/authHandler");
@@ -17,12 +18,13 @@ const {
   getUserById,
   forgotPassword,
 } = require("./handler/userHandler");
-const {drink} = require("./handler/moodHandler");
+const { drink } = require("./handler/moodHandler");
 const {
   addFavoriteCoffee,
   removeFavoriteCoffee,
   getFavoriteCoffee,
 } = require("./handler/userFavoriteHandler");
+const { getCoffeeRecommendation } = require("./handler/predictHandler");
 
 const authRoute = [
   {
@@ -112,6 +114,11 @@ const coffeeRatingRoute = [
     path: "/users/{id}/rating",
     handler: removeRatingCoffee,
   },
+  {
+    method: "GET",
+    path: "/users/{id}/rating",
+    handler: getUserRating,
+  },
 ];
 
 const moodBasedRoute = [
@@ -122,6 +129,14 @@ const moodBasedRoute = [
   },
 ];
 
+const predictRoute = [
+  {
+    method: "GET",
+    path: "/recommendation/{id}",
+    handler: getCoffeeRecommendation,
+  },
+];
+
 const routes = [
   ...authRoute,
   ...userRoute,
@@ -129,6 +144,7 @@ const routes = [
   ...userFavoriteRoute,
   ...coffeeRatingRoute,
   ...moodBasedRoute,
+  ...predictRoute,
 ];
 
 module.exports = routes;
