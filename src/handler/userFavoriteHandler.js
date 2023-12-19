@@ -1,4 +1,4 @@
-const { db,FieldValue } = require("../lib/firebase");
+const { db, FieldValue } = require("../lib/firebase");
 
 const addFavoriteCoffee = async (request, h) => {
   try {
@@ -46,7 +46,6 @@ const addFavoriteCoffee = async (request, h) => {
         id: user.id,
         email: user.data().email,
         name: user.data().name,
-        favoriteCoffee: user.data().favoriteCoffee,
       },
     });
     response.code(201);
@@ -119,7 +118,6 @@ const removeFavoriteCoffee = async (request, h) => {
         id: user.id,
         email: user.data().email,
         name: user.data().name,
-        favoriteCoffee: user.data().favoriteCoffee,
       },
     });
     response.code(201);
@@ -148,7 +146,7 @@ const getFavoriteCoffee = async (request, h) => {
       return response;
     }
 
-    const favoriteCoffee = user.data().favoriteCoffee;
+    const favoriteCoffee = user.data().favoriteCoffee || [];
     const favoriteCoffeeData = [];
     for (let i = 0; i < favoriteCoffee.length; i++) {
       const docRef = db.collection("recipes").doc(favoriteCoffee[i]);
