@@ -4,10 +4,14 @@ The cloud computing part of this capstone project is to create an API that can b
 ## Installation
 
 
-$ git clone https://github.com/yourusername/yourproject.git //
+$ git clone https://github.com/yourusername/yourproject.git
+
 $ cd Capstone_CoffeeScape
+
 $ npm install
+
 #insert your service account and .env
+
 $ npm run dev
 
 ## Documentation
