@@ -16,6 +16,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,11 +29,17 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.lutfi.coffeescape.R
+import com.lutfi.coffeescape.data.api.response.DataUser
 import com.lutfi.coffeescape.navigation.Screen
 import com.lutfi.coffeescape.ui.ViewModelFactory
 import com.lutfi.coffeescape.ui.component.BottomBar
+import com.lutfi.coffeescape.ui.component.MyTopBar
+import com.lutfi.coffeescape.ui.component.MyTopBar2
 import com.lutfi.coffeescape.ui.component.Search
+import com.lutfi.coffeescape.ui.home.screen.detail.DetailCoffeeScreen
+import com.lutfi.coffeescape.ui.home.screen.detail.DetailCoffeeViewModel
 import com.lutfi.coffeescape.ui.home.screen.favorite.FavoriteScreen
+import com.lutfi.coffeescape.ui.home.screen.favorite.FavoriteViewModel
 import com.lutfi.coffeescape.ui.home.screen.home.HomeScreen
 import com.lutfi.coffeescape.ui.home.screen.profile.ProfileScreen
 import com.lutfi.coffeescape.ui.landingpage.WelcomeActivity
@@ -43,6 +50,15 @@ class HomeActivity : AppCompatActivity() {
     private val viewModel by viewModels<HomeViewModel> {
         ViewModelFactory.getInstance(this)
     }
+
+    private val detailViewModel by viewModels<DetailCoffeeViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+
+    private val favoriteViewModel by viewModels<FavoriteViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -51,10 +67,18 @@ class HomeActivity : AppCompatActivity() {
                 startActivity(Intent(this, WelcomeActivity::class.java))
                 finish()
             } else {
-                setContent {
-                    CoffeeScapeTheme {
-                        Surface {
-                            CoffeeScapeApp( logout = { logout() })
+                viewModel.getUserProfile(user.id)
+                viewModel.userProfile.observe(this) { dataUser ->
+                    setContent {
+                        CoffeeScapeTheme {
+                            Surface {
+                                CoffeeScapeApp(
+                                    logout = { logout() },
+                                    userData = dataUser,
+                                    detailViewModel = detailViewModel,
+                                    favoriteViewModel = favoriteViewModel,
+                                )
+                            }
                         }
                     }
                 }
@@ -71,12 +95,31 @@ class HomeActivity : AppCompatActivity() {
 fun CoffeeScapeApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
+    detailViewModel: DetailCoffeeViewModel,
+    favoriteViewModel: FavoriteViewModel,
     logout: () -> Unit,
+    userData: DataUser,
 ) {
    val navBackStackEntry by navController.currentBackStackEntryAsState()
    val currentRoute = navBackStackEntry?.destination?.route
    
    Scaffold(
+       topBar = {
+                when (currentRoute) {
+                    Screen.Favorite.route -> {
+                        MyTopBar(text = stringResource(R.string.your_favorite_coffee))
+                    }
+                    Screen.Profile.route -> {
+                        MyTopBar(text = stringResource(R.string.profile))
+                    }
+                    Screen.DetailCoffee.route -> {
+                        MyTopBar2(
+                            navController = navController,
+                            text = stringResource(R.string.detail_coffee)
+                        )
+                    }
+                }
+       },
        bottomBar = {
            if (currentRoute != Screen.DetailCoffee.route && currentRoute != Screen.MoodCoffee.route) {
                BottomBar(navController)
@@ -90,16 +133,23 @@ fun CoffeeScapeApp(
            modifier = Modifier.padding(innerPadding)
        ) {
            composable(Screen.Home.route) {
-               HomeScreen(
-
-               )
+               HomeScreen()
            }
            composable(Screen.Favorite.route) {
-               FavoriteScreen()
+               FavoriteScreen(
+                   navigateToDetail = { coffeeId ->
+                       navController.navigate(Screen.DetailCoffee.createRoute(coffeeId))
+                   },
+                   userId = userData.id,
+                   viewModel = favoriteViewModel,
+               )
 
            }
            composable(Screen.Profile.route) {
                ProfileScreen(
+                   image = R.drawable.blank_profile,
+                   name = userData.name,
+                   email = userData.email,
                    logout = {
                        logout()
                    }
@@ -107,10 +157,24 @@ fun CoffeeScapeApp(
            }
            composable(
                route = Screen.DetailCoffee.route,
-               arguments = listOf(navArgument("coffeeId") { type = NavType.LongType })
+               arguments = listOf(navArgument("coffeeId") { type = NavType.StringType })
            ) {
-               val id = it.arguments?.getLong("coffeeId") ?: -1L
+               val id = it.arguments?.getString("coffeeId") ?: ""
+               DetailCoffeeScreen(
+                   userId = userData.id,
+                   coffeeId = id,
+                   viewModel = detailViewModel,
+                   navigateBack = {
+                       navController.navigateUp()
+                   },
+                   navigateToRating = {
 
+                   },
+                   addFavorite = {
+
+                   },
+                   innerPadding = innerPadding
+               )
            }
            composable(
                route = Screen.MoodCoffee.route,
@@ -121,13 +185,5 @@ fun CoffeeScapeApp(
            }
        }
    } 
-}
-
-@Preview(showBackground = true, device = Devices.PIXEL_4)
-@Composable
-fun CoffeeScapePreview() {
-    CoffeeScapeTheme {
-        CoffeeScapeApp(logout = {})
-    }
 }
 
