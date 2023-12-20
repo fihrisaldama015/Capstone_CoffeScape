@@ -1,5 +1,6 @@
 const arabica = require("../rating");
 const { db, FieldValue } = require("../lib/firebase");
+const { default: axios } = require("axios");
 
 const addRating = async (request, h) => {
   const ratingsCollection = db.collection("rating");
@@ -72,6 +73,29 @@ const addCoffeeRating = async (request, h) => {
       });
       response.code(400);
       return response;
+    }
+    try {
+      const apiResponse = await axios.post(
+        `${process.env.ML_API_ENDPOINT}/predict`,
+        {
+          text: comment,
+        }
+      );
+      const prediction = await apiResponse.data.prediction;
+      if (prediction && prediction.length > 0) {
+        let reason = prediction.join(", ");
+        const response = h.response({
+          status: "fail",
+          message: "The comment is containing bad words : " + reason,
+        });
+        response.code(400);
+        return response;
+      }
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: userRatingHandler.js:95 ~ addCoffeeRating ~ error: ML API error - ",
+        error.message
+      );
     }
 
     const user = await db.collection("users").doc(id).get();
