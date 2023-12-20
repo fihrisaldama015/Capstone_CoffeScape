@@ -26,11 +26,11 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = CoffeeBrown,
-    secondary = CoffeeBrown,
+    primary = BannerColor,
+    secondary = Brown,
     secondaryContainer = LightCoffeeBrown,
-    onSecondaryContainer = CoffeeBrown,
-    onSurface = CoffeeBrown,
+    onSecondaryContainer = Brown,
+    onSurface = Brown,
     onSurfaceVariant = LightGray,
     background = Color.White,
 
