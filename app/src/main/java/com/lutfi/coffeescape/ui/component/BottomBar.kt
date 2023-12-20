@@ -12,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,6 +27,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.lutfi.coffeescape.R
 import com.lutfi.coffeescape.navigation.BottomBarItem
 import com.lutfi.coffeescape.navigation.Screen
+import com.lutfi.jetcoffee.ui.theme.BannerColor
 import com.lutfi.jetcoffee.ui.theme.Brown
 
 @Composable
@@ -78,9 +80,11 @@ fun BottomBar(
                 label = {
                     Text(
                         text = item.title,
-                        fontSize = 10.sp
                     )
                 },
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = Color.White,
+                )
             )
         }
 

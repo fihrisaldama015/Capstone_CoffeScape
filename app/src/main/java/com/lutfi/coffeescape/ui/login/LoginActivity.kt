@@ -56,8 +56,8 @@ class LoginActivity : AppCompatActivity() {
     private fun showAlert(isSuccess: Boolean) {
         viewModel.messages.observe(this){ response ->
             val email = binding.emailEditText.text.toString()
-            viewModel.token.observe(this) {
-                viewModel.saveSession(UserModel(email, it.toString()))
+            viewModel.dataLogin.observe(this) { data ->
+                viewModel.saveSession(UserModel(email, data.userId, data.token))
             }
 
             if (isSuccess) {

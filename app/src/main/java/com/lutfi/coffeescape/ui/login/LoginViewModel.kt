@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.gson.Gson
 import com.lutfi.coffeescape.data.CoffeeScapeRepository
+import com.lutfi.coffeescape.data.api.response.DataLogin
 import com.lutfi.coffeescape.data.api.response.ErrorResponse
 import com.lutfi.coffeescape.data.pref.UserModel
 import kotlinx.coroutines.launch
@@ -24,6 +25,9 @@ class LoginViewModel(private val repository: CoffeeScapeRepository) : ViewModel(
     private val _token = MutableLiveData<String?>()
     val token: LiveData<String?> = _token
 
+    private val _dataLogin = MutableLiveData<DataLogin>()
+    val dataLogin: LiveData<DataLogin> = _dataLogin
+
     fun saveSession(user: UserModel) {
         viewModelScope.launch {
             repository.saveSession(user)
@@ -37,6 +41,7 @@ class LoginViewModel(private val repository: CoffeeScapeRepository) : ViewModel(
                 val response = repository.loginUser(email, password)
                 _isLoading.value = false
                 _isSuccess.value = true
+                _dataLogin.value = response.data
                 _token.value = response.data.token
                 _messages.value = response.message
             } catch (e: HttpException) {
