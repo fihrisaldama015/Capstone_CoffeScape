@@ -1,7 +1,7 @@
 const {
   addData,
-  getArabica,
-  getArabicaById,
+  getcoffee,
+  getcoffeeById,
 } = require("./handler/coffeeHandler");
 
 const {
@@ -70,13 +70,13 @@ const recipesRoute = [
   },
   {
     method: "GET",
-    path: "/arabica",
-    handler: getArabica,
+    path: "/coffee",
+    handler: getcoffee,
   },
   {
     method: "GET",
-    path: "/arabica/{id}",
-    handler: getArabicaById,
+    path: "/coffee/{id}",
+    handler: getcoffeeById,
   },
 ];
 

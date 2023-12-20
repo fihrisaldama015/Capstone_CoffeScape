@@ -1,9 +1,9 @@
-const arabica = require("../coffee");
+const coffee = require("../coffee");
 const { db } = require("../lib/firebase");
 
-const getArabica = async (request, h) => {
+const getcoffee = async (request, h) => {
   try {
-    let arabica = [];
+    let coffee = [];
     await db
       .collection("recipes")
       .get()
@@ -11,6 +11,7 @@ const getArabica = async (request, h) => {
         querySnapshot.forEach((doc) => {
           const temp = {
             id: doc.id,
+            thumbnail: doc.data().thumbnail,
             name: doc.data().name,
             FlavorProfiles: doc.data().FlavorProfiles,
             RoastLevel: doc.data().RoastLevel,
@@ -20,14 +21,14 @@ const getArabica = async (request, h) => {
             moodType: doc.data().moodType, 
             rating: doc.data().rating,
           };
-          arabica.push(temp);
+          coffee.push(temp);
         });
       });
 
     const response = h.response({
       status: "success",
-      message: "get Arabica successfully",
-      data: arabica,
+      message: "get coffee successfully",
+      data: coffee,
     });
     response.code(400);
     return response;
@@ -35,13 +36,13 @@ const getArabica = async (request, h) => {
     console.log(error);
     const response = h.response({
       status: "fail",
-      message: "get Arabica failed: " + error,
+      message: "get coffee failed: " + error,
     });
     response.code(400);
     return response;
   }
 };
-const getArabicaById = async (request, h) => {
+const getcoffeeById = async (request, h) => {
   try {
     const { id } = request.params;
 
@@ -49,8 +50,9 @@ const getArabicaById = async (request, h) => {
     const doc = await docRef.get();
     if (doc.exists) {
       const data = doc.data();
-      const arabicaRecipe = {
+      const coffeeRecipe = {
         id: doc.id,
+        thumbnail: data.thumbnail,
         name: data.name,
         FlavorProfiles: data.FlavorProfiles,
         RoastLevel: data.RoastLevel,
@@ -63,15 +65,15 @@ const getArabicaById = async (request, h) => {
 
       const response = h.response({
         status: "success",
-        message: "Fetched Arabica recipe by ID successfully",
-        data: arabicaRecipe,
+        message: "Fetched coffee recipe by ID successfully",
+        data: coffeeRecipe,
       });
       response.code(200);
       return response;
     } else {
       const response = h.response({
         status: "fail",
-        message: "Arabica recipe not found",
+        message: "coffee recipe not found",
       });
       response.code(404);
       return response;
@@ -80,7 +82,7 @@ const getArabicaById = async (request, h) => {
     console.error(error);
     const response = h.response({
       status: "fail",
-      message: "Failed to get Arabica recipe by ID: " + error.message,
+      message: "Failed to get coffee recipe by ID: " + error.message,
     });
     response.code(500);
     return response;
@@ -90,7 +92,7 @@ const getArabicaById = async (request, h) => {
 const addData = (request, h) => {
   const recipesCollection = db.collection("recipes");
   try {
-    arabica.map((recipe,) => {
+    coffee.map((recipe,) => {
       recipesCollection
         .doc(recipe.coffeeId.toString())
         .set(recipe, { merge: true })
@@ -118,4 +120,4 @@ const addData = (request, h) => {
   }
 };
 
-module.exports = { addData, getArabica, getArabicaById };
+module.exports = { addData, getcoffee, getcoffeeById };
