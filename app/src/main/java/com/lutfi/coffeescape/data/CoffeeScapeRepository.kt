@@ -1,12 +1,10 @@
 package com.lutfi.coffeescape.data
 
-import com.lutfi.coffeescape.data.api.response.CoffeeResponse
 import com.lutfi.coffeescape.data.api.response.DataCoffee
 import com.lutfi.coffeescape.data.api.response.DataDetail
 import com.lutfi.coffeescape.data.api.response.DataUser
 import com.lutfi.coffeescape.data.api.response.DeleteFavoriteRequest
 import com.lutfi.coffeescape.data.api.response.LoginResponse
-import com.lutfi.coffeescape.data.api.response.UserProfileResponse
 import com.lutfi.coffeescape.data.api.retrofit.ApiService
 import com.lutfi.coffeescape.data.pref.UserModel
 import com.lutfi.coffeescape.data.pref.UserPreference
@@ -62,6 +60,24 @@ class CoffeeScapeRepository private constructor(
     }
     suspend fun getCoffeeById(coffeeId: String): DataDetail {
         return apiService.getCoffeeById(coffeeId).data
+    }
+
+    suspend fun addCoffeeRating(userId: String, coffeeId: String, rating: String, comment: String): String {
+        return apiService.AddCoffeeRating(userId, coffeeId, rating, comment).message.toString()
+    }
+
+    suspend fun getAllCoffee(): Flow<List<DataCoffee>> {
+        return flowOf(apiService.getAllCoffee().data)
+    }
+
+    suspend fun getRecommendationCoffee(userId: String): Flow<List<DataDetail>> {
+        val recommendId = apiService.getRecommendationCoffee(userId).data.prediction
+        val recommendation: MutableList<DataDetail> = mutableListOf()
+        for (id in recommendId) {
+            val coffee = apiService.getCoffeeById(id.toString()).data
+            recommendation.add(coffee)
+        }
+        return flowOf(recommendation)
     }
 
 
