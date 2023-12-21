@@ -33,11 +33,6 @@ class DetailCoffeeViewModel(
     val message: LiveData<String?>
         get() = _message
 
-    private val _predict: MutableStateFlow<UiState<List<String?>>> =
-        MutableStateFlow(UiState.Loading)
-    val predict: StateFlow<UiState<List<String?>>>
-        get() = _predict
-
     fun getCoffeeById(coffeeId: String) {
         viewModelScope.launch {
             try {
@@ -57,6 +52,7 @@ class DetailCoffeeViewModel(
             _isFavorite.value = UiState.Loading
             _isFavorite.value = UiState.Success(repository.getFavoriteById(userId, coffeeId))
         }
+        repository.insertHistory(coffeeId)
     }
 
     fun addToFavorite(userId: String, coffeeId: String) {

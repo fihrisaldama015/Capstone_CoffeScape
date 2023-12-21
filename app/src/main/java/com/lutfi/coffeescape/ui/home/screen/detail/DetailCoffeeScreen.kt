@@ -54,10 +54,6 @@ fun DetailCoffeeScreen(
     userId: String,
     coffeeId: String,
     viewModel: DetailCoffeeViewModel,
-    navigateBack: () -> Unit,
-    navigateToRating: () -> Unit,
-    addFavorite: () -> Unit,
-    innerPadding: PaddingValues,
 ) {
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when (uiState) {
@@ -82,7 +78,6 @@ fun DetailCoffeeScreen(
                             }
                             DetailContent(
                                 coffee = data,
-                                onBackClick = navigateBack,
                                 onAddRating = { rating, comment ->
                                     viewModel.addCoffeeRating(userId, coffeeId, rating, comment)
                                 },
@@ -104,24 +99,6 @@ fun DetailCoffeeScreen(
                 }
             }
             is UiState.Error -> {
-                DetailContent(
-                    coffee = dummyDetail,
-                    onBackClick = navigateBack,
-                    onAddRating = { rating, comment ->
-//                        viewModel.addCoffeeRating(userId, coffeeId, rating, comment)
-                    },
-                    onFavorite = {
-//                        if (favorite) {
-//                            favorite = false
-//                            viewModel.deleteFromFavorite(userId, data.id)
-//                        } else {
-//                            favorite = true
-//                            viewModel.addToFavorite(userId, data.id)
-//                        }
-                    },
-                    isFavorite = true,
-                    message = "jhiuoio"
-                )
             }
         }
     }
@@ -131,7 +108,6 @@ fun DetailCoffeeScreen(
 @Composable
 fun DetailContent(
     coffee: DataDetail,
-    onBackClick: () -> Unit,
     onAddRating: (String, String) -> Unit,
     onFavorite: () -> Unit,
     isFavorite: Boolean,
