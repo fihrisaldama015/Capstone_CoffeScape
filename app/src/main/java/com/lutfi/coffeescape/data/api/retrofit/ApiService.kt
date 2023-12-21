@@ -5,9 +5,11 @@ import com.lutfi.coffeescape.data.api.response.CoffeeResponse
 import com.lutfi.coffeescape.data.api.response.DeleteFavoriteRequest
 import com.lutfi.coffeescape.data.api.response.DetailCoffeeResponse
 import com.lutfi.coffeescape.data.api.response.LoginResponse
+import com.lutfi.coffeescape.data.api.response.MoodDetailResponse
 import com.lutfi.coffeescape.data.api.response.RecommendationResponse
 import com.lutfi.coffeescape.data.api.response.RegisterResponse
 import com.lutfi.coffeescape.data.api.response.UserProfileResponse
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -15,6 +17,7 @@ import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
     @FormUrlEncoded
@@ -76,4 +79,19 @@ interface ApiService {
     suspend fun getRecommendationCoffee(
         @Path("id") id : String
     ): RecommendationResponse
+
+    @GET("mood/{moodType}")
+    suspend fun getCoffeeBasedOnMood(
+        @Path("moodType") moodType: String
+    ): MoodDetailResponse
+
+    @GET("coffee")
+    suspend fun searchCoffeeByName(
+        @Query("name") name: String,
+    ): CoffeeResponse
+
+    @GET("coffee")
+    suspend fun searchCoffeeByFlavor(
+        @Query("FlavorProfiles") flavor: String,
+    ): CoffeeResponse
 }
