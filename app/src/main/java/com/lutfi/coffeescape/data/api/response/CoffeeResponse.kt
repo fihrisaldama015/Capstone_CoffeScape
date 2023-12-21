@@ -19,6 +19,9 @@ data class DataCoffee(
 	@field:SerializedName("id")
 	val id: String,
 
+	@field:SerializedName("thumbnail")
+	val imageUrl: String? = null,
+
 	@field:SerializedName("name")
 	val name: String,
 
@@ -37,8 +40,8 @@ data class DataCoffee(
 	@field:SerializedName("rating")
 	val rating: Double? = null,
 
-	@field:SerializedName("imageUrl")
-	val imageUrl: String? = null,
+	@field:SerializedName("moodType")
+	val moodType: String? = null,
 
 	@field:SerializedName("BrewingMethod")
 	val brewingMethod: String? = null
