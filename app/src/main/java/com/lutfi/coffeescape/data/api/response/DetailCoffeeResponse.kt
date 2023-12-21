@@ -19,7 +19,7 @@ data class DataDetail(
 	@field:SerializedName("BrewingMethod")
 	val brewingMethod: String? = null,
 
-	@field:SerializedName("ImageUrl")
+	@field:SerializedName("thumbnail")
 	val imageUrl: String? = null,
 
 	@field:SerializedName("ServingStyle")
