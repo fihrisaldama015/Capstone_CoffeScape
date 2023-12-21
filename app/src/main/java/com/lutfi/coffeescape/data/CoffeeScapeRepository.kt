@@ -1,20 +1,32 @@
 package com.lutfi.coffeescape.data
 
+import androidx.lifecycle.asFlow
 import com.lutfi.coffeescape.data.api.response.DataCoffee
 import com.lutfi.coffeescape.data.api.response.DataDetail
 import com.lutfi.coffeescape.data.api.response.DataUser
 import com.lutfi.coffeescape.data.api.response.DeleteFavoriteRequest
 import com.lutfi.coffeescape.data.api.response.LoginResponse
+import com.lutfi.coffeescape.data.api.response.MoodDetailResponse
 import com.lutfi.coffeescape.data.api.retrofit.ApiService
+import com.lutfi.coffeescape.data.database.CoffeeDatabase
 import com.lutfi.coffeescape.data.pref.UserModel
 import com.lutfi.coffeescape.data.pref.UserPreference
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class CoffeeScapeRepository private constructor(
     private val userPreference: UserPreference,
+    private val coffeeDatabase: CoffeeDatabase,
     private val apiService: ApiService,
 ) {
+    private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
+
     suspend fun saveSession(user: UserModel) {
         userPreference.saveSession(user)
     }
@@ -24,6 +36,9 @@ class CoffeeScapeRepository private constructor(
     }
 
     suspend fun logout() {
+        executorService.execute {
+            coffeeDatabase.coffeeDao().deleteHistory()
+        }
         userPreference.logout()
     }
 
@@ -79,7 +94,36 @@ class CoffeeScapeRepository private constructor(
         }
         return flowOf(recommendation)
     }
+    fun insertHistory(coffeeId: String) {
+        executorService.execute {
+            coffeeDatabase.coffeeDao().insertHistory(coffeeId)
+        }
+    }
 
+    suspend fun getHistoryCoffee(): Flow<List<DataDetail>> = coffeeDatabase.coffeeDao().getCoffeeIdHistory().asFlow()
+        .flatMapLatest { historyId ->
+            flow {
+                val historyCoffee: MutableList<DataDetail> = mutableListOf()
+
+                historyId?.forEach { id ->
+                    val coffee = apiService.getCoffeeById(id).data
+                    historyCoffee.add(coffee)
+                }
+
+                emit(historyCoffee)
+            }
+        }
+        .flowOn(Dispatchers.IO)
+
+    suspend fun getCoffeeBasedOnMood(moodType: String): MoodDetailResponse {
+        return apiService.getCoffeeBasedOnMood(moodType)
+    }
+
+    suspend fun searchCoffee(query: String): Flow<List<DataCoffee>> {
+        val resultByName = apiService.searchCoffeeByName(query).data
+        val resultByFlavor = apiService.searchCoffeeByFlavor(query).data
+        return flowOf((resultByName + resultByFlavor).distinctBy { it.id })
+    }
 
     companion object {
         @Volatile
@@ -87,10 +131,11 @@ class CoffeeScapeRepository private constructor(
 
         fun getInstance(
             userPreference: UserPreference,
+            database: CoffeeDatabase,
             apiService: ApiService
         ): CoffeeScapeRepository =
             instance ?: synchronized(this) {
-                instance ?: CoffeeScapeRepository(userPreference, apiService)
+                instance ?: CoffeeScapeRepository(userPreference, database, apiService)
             }.also { instance = it }
     }
 }
