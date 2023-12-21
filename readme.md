@@ -75,6 +75,9 @@ When prompted, enter your mood (happy, sad, lonely, or bored).
 The script will output a suggestion based on your mood.
 
 
+
+
+  
 # CoffeeScape API
 
 
