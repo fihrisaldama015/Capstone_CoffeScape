@@ -27,7 +27,7 @@ Edit the `test_text` variable in the script with your own text and run the scrip
 - NumPy
 - Scikit-Learn
 ## Instruction
-#### 1. Install Dependencies:
+#### 1. Install Dependencies
 `pip install pandas numpy scikit-learn`
 #### 2. Download The Collaborative Filtering Dataset
 For the collaborative filtering task, download the 'NEW_Dataset Capstone.xlsx - Rating Data (5).csv' file and place it in the same directory as the script.
@@ -44,7 +44,7 @@ The script saves the item similarity matrix using pickle as 'finalized_model.pkl
 JavaScript-enabled environment (browser, Node.js, etc.)
 ## Instruction
 #### 1. Get the data
-Get the data from the dataset for mood based and put them inside the list of each variables.
+Get the data from the dataset for mood based and put them inside the list of each variables. Ensure you have access to the dataset containing mood-based drink information.
 #### 2. Run the script
 Open the HTML file containing the script in a browser or execute the script using Node.js.
 #### 3. Enter Your Mood
