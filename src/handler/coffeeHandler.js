@@ -4,6 +4,7 @@ const { db } = require("../lib/firebase");
 const getcoffee = async (request, h) => {
   try {
     let coffee = [];
+
     await db
       .collection("recipes")
       .get()
@@ -18,12 +19,29 @@ const getcoffee = async (request, h) => {
             ServingStyle: doc.data().ServingStyle,
             RecommendedBeans: doc.data().RecommendedBeans,
             BrewingMethod: doc.data().BrewingMethod,
-            moodType: doc.data().moodType, 
+            moodType: doc.data().moodType,
             rating: doc.data().rating,
           };
           coffee.push(temp);
         });
       });
+
+    if (request.query.name) {
+      coffee = coffee.filter((item) => {
+        const regex = new RegExp(request.query.name, "gi");
+        return item.name.match(regex);
+      });
+    }
+
+    if (request.query.FlavorProfiles) {
+      coffee = coffee.filter((item) => {
+        if (item.FlavorProfiles === undefined) return false;
+        const contains = item.FlavorProfiles.includes(
+          request.query.FlavorProfiles
+        );
+        return contains;
+      });
+    }
 
     const response = h.response({
       status: "success",
@@ -59,7 +77,7 @@ const getcoffeeById = async (request, h) => {
         ServingStyle: data.ServingStyle,
         RecommendedBeans: data.RecommendedBeans,
         BrewingMethod: data.BrewingMethod,
-        moodType: doc.data().moodType, 
+        moodType: doc.data().moodType,
         rating: data.rating,
       };
 
@@ -92,7 +110,7 @@ const getcoffeeById = async (request, h) => {
 const addData = (request, h) => {
   const recipesCollection = db.collection("recipes");
   try {
-    coffee.map((recipe,) => {
+    coffee.map((recipe) => {
       recipesCollection
         .doc(recipe.coffeeId.toString())
         .set(recipe, { merge: true })
