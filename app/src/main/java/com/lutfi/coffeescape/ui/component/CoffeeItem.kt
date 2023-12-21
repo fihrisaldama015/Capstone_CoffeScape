@@ -67,6 +67,7 @@ fun CoffeeItem(
                 modifier = Modifier
                     .padding(horizontal = 12.dp)
                     .fillMaxHeight()
+                    .fillMaxWidth()
             ) {
                 Row(
                     modifier = Modifier

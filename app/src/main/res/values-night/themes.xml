@@ -10,8 +10,4 @@
         <item name="colorOnSecondary">@color/white</item>
 
     </style>
-
-    <style name="SplashScreenStyle" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash</item>
-    </style>
 </resources>
