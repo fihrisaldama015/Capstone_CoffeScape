@@ -2,9 +2,12 @@
     <string name="app_name">CoffeeScape</string>
     <string name="splash_screen">Splash Screen CoffeeScape</string>
     <string name="landing_1_title">Welcome to CoffeeScape</string>
+    <string name="landing_1_description">The revolutionary app that understands the importance of enjoying coffee aligned with your feelings. With our intelligent algorithm, we don\'t just offer a fresh cup of coffee, but we also tailor it to match your mood.</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet consectetur. Rhoncus magna arcu velit lorem sagittis magnis nisl tincidunt. Pretium amet lectus rhoncus natoque tortor aliquet id feugiat magna.</string>
-    <string name="landing_2_title">Search and Find Your Favorite Coffee</string>
-    <string name="landing_3_title">Mood Based Recommender</string>
+    <string name="landing_2_title">Discover Coffee that Reflects You</string>
+    <string name="landing_2_description">At CoffeeScape, we believe that coffee isn\'t just a drink but also a reflection of your state of mind. From the warmth to the awakening strength, we bring you a coffee experience that not only delights your taste buds but also speaks to your soul.</string>
+    <string name="landing_3_title">Create Coffee Experiences Beyond Flavors</string>
+    <string name="landing_3_description">We\'re changing the way you perceive and savor coffee. We don\'t just offer a beverage, we present an enjoyable and entertaining experience. With diverse options tailored to your feelings, we help you find coffee that uplifts, pampers, or celebrates your moments.</string>
     <string name="landing_4_title">CoffeeScape</string>
     <string name="slogan">Savor your sip!</string>
     <string name="register">Create Account</string>
@@ -45,4 +48,7 @@
     <string name="recently_opened_coffee">Recently Opened Coffee</string>
     <string name="coffee_s_image">Coffee\'s Image</string>
     <string name="detail_coffee">Detail Coffee</string>
+    <string name="coffee_for_your_mood">Coffee for Your Mood</string>
+    <string name="the_coffee_searched_for_was_not_found">The coffee searched for was not found.</string>
+    <string name="search_coffee">Search coffee</string>
 </resources>
