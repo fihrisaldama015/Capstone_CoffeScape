@@ -51,3 +51,37 @@ Open the HTML file containing the script in a browser or execute the script usin
 When prompted, enter your mood (happy, sad, lonely, or bored).
 #### 4. View the Suggested Drink
 The script will output a suggestion based on your mood.
+
+# Deploy ML Model
+
+## Server Requirements
+
+<b>Python</b> - version 3.8 or above.
+
+## Installation
+
+### Clone This Repo
+
+```
+git clone -b ml https://github.com/fihrisaldama015/Capstone_CoffeScape.git
+cd Capstone_CoffeScape/API_FLASK
+```
+Clone the `ml` branch & go to the `API_FLASK` folder directory
+
+### Install Dependencies
+
+```
+pip install --user tensorflow
+pip install --user flask
+pip install --user pandas
+pip install --user pickle
+pip install --user numpy
+```
+
+### Run the ML API
+
+```
+$ python3 coffeescape.py
+```
+
+the server run on port 5000
