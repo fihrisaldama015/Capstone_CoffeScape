@@ -18,7 +18,7 @@ fun SectionText(
         text = title,
         style = MaterialTheme.typography.headlineSmall.copy(
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
+            fontSize = 19.sp
         ),
         modifier = modifier
             .padding(horizontal = 16.dp, vertical = 8.dp)

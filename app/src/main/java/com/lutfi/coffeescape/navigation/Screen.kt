@@ -8,7 +8,13 @@ sealed class Screen(val route: String) {
         fun createRoute(coffeeId: String) = "home/$coffeeId"
     }
 
-    object MoodCoffee : Screen("home/{mood}") {
-        fun createRoute(mood: String) = "home/$mood"
+    object MoodCoffee : Screen("home/{mood}/{icon}") {
+        fun createRoute(mood: String, icon: Int) = "home/$mood/$icon"
+    }
+
+    object SearchResult : Screen("searchResult/{query}") {
+        fun withArg(query: Pair<String, String>): String {
+            return "searchResult/${query.second}"
+        }
     }
 }

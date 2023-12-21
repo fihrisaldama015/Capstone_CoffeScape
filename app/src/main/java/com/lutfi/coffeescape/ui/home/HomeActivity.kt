@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,13 +40,19 @@ import com.lutfi.coffeescape.ui.component.BottomBar
 import com.lutfi.coffeescape.ui.component.MyTopBar
 import com.lutfi.coffeescape.ui.component.MyTopBar2
 import com.lutfi.coffeescape.ui.component.Search
+import com.lutfi.coffeescape.ui.component.Search2
 import com.lutfi.coffeescape.ui.home.screen.detail.DetailCoffeeScreen
 import com.lutfi.coffeescape.ui.home.screen.detail.DetailCoffeeViewModel
 import com.lutfi.coffeescape.ui.home.screen.favorite.FavoriteScreen
 import com.lutfi.coffeescape.ui.home.screen.favorite.FavoriteViewModel
 import com.lutfi.coffeescape.ui.home.screen.home.HomeScreen
 import com.lutfi.coffeescape.ui.home.screen.home.HomeScreenViewModel
+import com.lutfi.coffeescape.ui.home.screen.mood.DetailMoodScreen
+import com.lutfi.coffeescape.ui.home.screen.mood.DetailMoodViewModel
 import com.lutfi.coffeescape.ui.home.screen.profile.ProfileScreen
+import com.lutfi.coffeescape.ui.home.screen.profile.ProfileViewModel
+import com.lutfi.coffeescape.ui.home.screen.search.SearchResultScreen
+import com.lutfi.coffeescape.ui.home.screen.search.SearchResultViewModel
 import com.lutfi.coffeescape.ui.landingpage.WelcomeActivity
 import com.lutfi.jetcoffee.ui.theme.CoffeeScapeTheme
 
@@ -64,6 +71,18 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private val homeScreenViewModel by viewModels<HomeScreenViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+
+    private val profileViewModel by viewModels<ProfileViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+
+    private val detailMoodViewModel by viewModels<DetailMoodViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+
+    private val searchViewModel by viewModels<SearchResultViewModel> {
         ViewModelFactory.getInstance(this)
     }
 
@@ -86,6 +105,9 @@ class HomeActivity : AppCompatActivity() {
                                     detailViewModel = detailViewModel,
                                     favoriteViewModel = favoriteViewModel,
                                     homeScreenViewModel = homeScreenViewModel,
+                                    profileViewModel = profileViewModel,
+                                    detailMoodViewModel = detailMoodViewModel,
+                                    searchResultViewModel = searchViewModel,
                                 )
                             }
                         }
@@ -109,6 +131,9 @@ fun CoffeeScapeApp(
     detailViewModel: DetailCoffeeViewModel,
     favoriteViewModel: FavoriteViewModel,
     homeScreenViewModel: HomeScreenViewModel,
+    profileViewModel: ProfileViewModel,
+    detailMoodViewModel: DetailMoodViewModel,
+    searchResultViewModel: SearchResultViewModel,
     logout: () -> Unit,
     userData: DataUser,
 ) {
@@ -130,10 +155,16 @@ fun CoffeeScapeApp(
                             text = stringResource(R.string.detail_coffee)
                         )
                     }
+                    Screen.MoodCoffee.route -> {
+                        MyTopBar2(
+                            navController = navController,
+                            text = stringResource(R.string.coffee_for_your_mood),
+                        )
+                    }
                 }
        },
        bottomBar = {
-           if (currentRoute != Screen.DetailCoffee.route && currentRoute != Screen.MoodCoffee.route) {
+           if (currentRoute != Screen.DetailCoffee.route && currentRoute != Screen.MoodCoffee.route && currentRoute != Screen.SearchResult.route) {
                BottomBar(navController)
            }
        },
@@ -150,6 +181,12 @@ fun CoffeeScapeApp(
                    userId = userData.id,
                    navigateToDetail = { coffeeId ->
                        navController.navigate(Screen.DetailCoffee.createRoute(coffeeId))
+                   },
+                   navigateToDetailMood = { mood, icon ->
+                       navController.navigate(Screen.MoodCoffee.createRoute(mood, icon))
+                   },
+                   navigateToSearchResult = { query ->
+                       navController.navigate(Screen.SearchResult.withArg("query" to query))
                    }
                )
            }
@@ -165,12 +202,15 @@ fun CoffeeScapeApp(
            }
            composable(Screen.Profile.route) {
                ProfileScreen(
-                   image = R.drawable.blank_profile,
                    name = userData.name,
                    email = userData.email,
                    logout = {
                        logout()
-                   }
+                   },
+                   viewModel = profileViewModel,
+                   navigateToDetail = { coffeeId ->
+                       navController.navigate(Screen.DetailCoffee.createRoute(coffeeId))
+                   },
                )
            }
            composable(
@@ -182,24 +222,37 @@ fun CoffeeScapeApp(
                    userId = userData.id,
                    coffeeId = id,
                    viewModel = detailViewModel,
-                   navigateBack = {
-                       navController.navigateUp()
-                   },
-                   navigateToRating = {
-
-                   },
-                   addFavorite = {
-
-                   },
-                   innerPadding = innerPadding
                )
            }
            composable(
                route = Screen.MoodCoffee.route,
-               arguments = listOf(navArgument("mood") { type = NavType.StringType })
+               arguments = listOf(
+                   navArgument("mood") { type = NavType.StringType },
+                   navArgument("icon") { type = NavType.IntType })
            ) {
-               val id = it.arguments?.getLong("mood") ?: ""
-
+               val moodType = it.arguments?.getString("mood") ?: ""
+               val icon = it.arguments?.getInt("icon") ?: 0
+               DetailMoodScreen(
+                   userName = userData.name,
+                   context = LocalContext.current,
+                   moodType = moodType,
+                   icon = icon,
+                   detailMoodViewModel = detailMoodViewModel,
+                   navigateToDetail = { coffeeId ->
+                       navController.navigate(Screen.DetailCoffee.createRoute(coffeeId))
+                   },
+               )
+           }
+           composable(Screen.SearchResult.route) { navBackStackEntry ->
+               val query = navBackStackEntry.arguments?.getString("query") ?: ""
+               SearchResultScreen(
+                   query = query,
+                   viewModel = searchResultViewModel,
+                   navigateToDetail = { coffeeId ->
+                       navController.navigate(Screen.DetailCoffee.createRoute(coffeeId))
+                   },
+                   navigationBack = navController
+               )
            }
        }
    } 
