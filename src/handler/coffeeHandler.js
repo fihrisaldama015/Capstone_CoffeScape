@@ -30,7 +30,7 @@ const getcoffee = async (request, h) => {
       message: "get coffee successfully",
       data: coffee,
     });
-    response.code(400);
+    response.code(200);
     return response;
   } catch (error) {
     console.log(error);
