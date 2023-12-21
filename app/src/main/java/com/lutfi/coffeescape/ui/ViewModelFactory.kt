@@ -8,6 +8,7 @@ import com.lutfi.coffeescape.di.Injection
 import com.lutfi.coffeescape.ui.home.HomeViewModel
 import com.lutfi.coffeescape.ui.home.screen.detail.DetailCoffeeViewModel
 import com.lutfi.coffeescape.ui.home.screen.favorite.FavoriteViewModel
+import com.lutfi.coffeescape.ui.home.screen.home.HomeScreenViewModel
 import com.lutfi.coffeescape.ui.login.LoginViewModel
 import com.lutfi.coffeescape.ui.register.RegisterViewModel
 
@@ -29,6 +30,9 @@ class ViewModelFactory private constructor(private val repository: CoffeeScapeRe
             }
             modelClass.isAssignableFrom(FavoriteViewModel::class.java) -> {
                 FavoriteViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(HomeScreenViewModel::class.java) -> {
+                HomeScreenViewModel(repository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
