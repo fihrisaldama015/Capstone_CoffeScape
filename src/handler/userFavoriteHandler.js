@@ -162,6 +162,7 @@ const getFavoriteCoffee = async (request, h) => {
           RecommendedBeans: data.RecommendedBeans,
           BrewingMethod: data.BrewingMethod,
           rating: data.rating,
+          thumbnail: data.thumbnail,
         };
         favoriteCoffeeData.push(arabicaRecipe);
       }
