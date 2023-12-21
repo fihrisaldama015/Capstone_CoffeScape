@@ -1,14 +1,19 @@
 package com.lutfi.coffeescape.ui.home.screen.profile
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -33,7 +38,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lutfi.coffeescape.R
+import com.lutfi.coffeescape.data.api.response.DataCoffee
+import com.lutfi.coffeescape.data.api.response.DataDetail
 import com.lutfi.coffeescape.data.dummy.dummyCoffee
+import com.lutfi.coffeescape.ui.component.BestCoffeeItem
 import com.lutfi.coffeescape.ui.component.HomeSection
 import com.lutfi.coffeescape.ui.home.screen.home.BestCoffeeRow
 import com.lutfi.jetcoffee.ui.theme.Brown
@@ -83,7 +91,7 @@ fun ProfileScreen(
             HomeSection(
                 title = stringResource(R.string.recently_opened_coffee),
                 content = {
-                    BestCoffeeRow(
+                    RecentlyRow(
                         coffee = dummyCoffee,
                         navigateToDetail = {}
                     )
@@ -171,6 +179,30 @@ fun UserProfileContent(
                     fontSize = 16.sp,
                     color = Color.DarkGray,
                 )
+            )
+        }
+    }
+}
+
+@Composable
+fun RecentlyRow(
+    coffee: List<DataCoffee>,
+    modifier: Modifier = Modifier,
+    navigateToDetail: (String) -> Unit,
+) {
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        modifier = modifier,
+    ) {
+        items(coffee, key =  { it.id }) { data ->
+            BestCoffeeItem(
+                imageUrl = data.imageUrl,
+                name = data.name,
+                rating = data.rating,
+                modifier = Modifier.clickable {
+                    navigateToDetail(data.id)
+                }
             )
         }
     }
