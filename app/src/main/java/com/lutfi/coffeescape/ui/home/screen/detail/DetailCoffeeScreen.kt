@@ -1,8 +1,8 @@
 package com.lutfi.coffeescape.ui.home.screen.detail
 
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,11 +14,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,20 +35,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.lutfi.coffeescape.R
 import com.lutfi.coffeescape.common.UiState
-import com.lutfi.coffeescape.data.api.response.DataCoffee
 import com.lutfi.coffeescape.data.api.response.DataDetail
 import com.lutfi.coffeescape.data.dummy.dummyCoffee
-import com.lutfi.coffeescape.di.Injection
-import com.lutfi.coffeescape.ui.ViewModelFactory
+import com.lutfi.coffeescape.data.dummy.dummyDetail
 import com.lutfi.coffeescape.ui.component.FavoriteButton
+import com.lutfi.coffeescape.ui.component.MessageDialog
 import com.lutfi.coffeescape.ui.component.RatingButton
+import com.lutfi.coffeescape.ui.component.RatingDialog
 import com.lutfi.coffeescape.ui.component.SectionText2
-import com.lutfi.coffeescape.ui.home.HomeViewModel
 import com.lutfi.jetcoffee.ui.theme.Brown
 
 @Composable
@@ -71,13 +73,19 @@ fun DetailCoffeeScreen(
                             viewModel.getFavoriteById(userId, coffeeId)
                         }
                         is UiState.Success -> {
-                           var favorite by rememberSaveable {
-                               mutableStateOf(isFavorite.data)
-                           }
+                           var favorite by rememberSaveable { mutableStateOf(isFavorite.data) }
+                            var message by remember { mutableStateOf("") }
+                            viewModel.message.observeAsState().value.let { messages ->
+                                if (messages != null) {
+                                    message = messages
+                                }
+                            }
                             DetailContent(
                                 coffee = data,
                                 onBackClick = navigateBack,
-                                onAddRating = navigateToRating,
+                                onAddRating = { rating, comment ->
+                                    viewModel.addCoffeeRating(userId, coffeeId, rating, comment)
+                                },
                                 onFavorite = {
                                      if (favorite) {
                                          favorite = false
@@ -88,13 +96,33 @@ fun DetailCoffeeScreen(
                                      }
                                 },
                                 isFavorite = favorite,
+                                message = message
                             )
                         }
                         is UiState.Error -> {}
                     }
                 }
             }
-            is UiState.Error -> {}
+            is UiState.Error -> {
+                DetailContent(
+                    coffee = dummyDetail,
+                    onBackClick = navigateBack,
+                    onAddRating = { rating, comment ->
+//                        viewModel.addCoffeeRating(userId, coffeeId, rating, comment)
+                    },
+                    onFavorite = {
+//                        if (favorite) {
+//                            favorite = false
+//                            viewModel.deleteFromFavorite(userId, data.id)
+//                        } else {
+//                            favorite = true
+//                            viewModel.addToFavorite(userId, data.id)
+//                        }
+                    },
+                    isFavorite = true,
+                    message = "jhiuoio"
+                )
+            }
         }
     }
 
@@ -104,11 +132,39 @@ fun DetailCoffeeScreen(
 fun DetailContent(
     coffee: DataDetail,
     onBackClick: () -> Unit,
-    onAddRating: () -> Unit,
+    onAddRating: (String, String) -> Unit,
     onFavorite: () -> Unit,
     isFavorite: Boolean,
+    message: String,
     modifier: Modifier = Modifier,
 ) {
+    var showDialog by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    var snackbarVisibleState by remember {
+        mutableStateOf(false)
+    }
+    
+    if (showDialog) {
+        RatingDialog(
+            value = "",
+            setShowDialog = {
+                showDialog = it
+            },
+            setSnackBarState = {
+                snackbarVisibleState = it
+            },
+            onAddRating = { rating, comment ->
+                onAddRating(rating, comment)
+            }
+        )
+    }
+    
+    if (snackbarVisibleState && message != "") {
+        MessageDialog(message = message, setShowDialog = { snackbarVisibleState = it })
+    }
+
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -125,7 +181,15 @@ fun DetailContent(
                 .fillMaxWidth()
                 .height(290.dp)
         )
-        DescriptionBox(name = coffee.name, rating = coffee.rating, isFavorite = isFavorite, onClickFavorite = onFavorite, onRating = onAddRating)
+        DescriptionBox(
+            name = coffee.name,
+            rating = coffee.rating,
+            isFavorite = isFavorite,
+            onClickFavorite = onFavorite,
+            onRating = {
+                showDialog = true
+            }
+        )
         Column(
             modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)
         ) {
@@ -180,7 +244,7 @@ fun DescriptionBox(
             .fillMaxWidth()
             .background(color = Brown)
             .padding(start = 16.dp, end = 4.dp),
-        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Log.d("apaaaa2","uudusssus")
@@ -204,7 +268,7 @@ fun DescriptionBox(
             Log.d("apaaaa4","uudusssus")
             RatingButton(
                 rating = rating,
-                onClick = onRating
+                onClick = onRating,
             )
             Log.d("apaaaa5","uudusssus")
             FavoriteButton(
