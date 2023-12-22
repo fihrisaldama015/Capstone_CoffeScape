@@ -2,7 +2,7 @@
 
 ### This is repository aplication of CoffeeScape
 
-Please change the branch to `cc`, `ml`, or `md` to see each path repository!
+Please change the branch to `cc`, `ml`, or `android` to see each path repository!
 
 # Our Design app
 
